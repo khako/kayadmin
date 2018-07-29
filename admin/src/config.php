@@ -1,3 +1,5 @@
 <?php
 
-echo 'salut';
+return [
+    'redirect' => '/login'
+];

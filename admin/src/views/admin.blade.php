@@ -9,7 +9,8 @@
     <title>Admin</title>
 </head>
 <body>
-    <div id="app"></div>
+    <div id="app"/>
+    <h1>salut</h1>
     <script type="text/javascript" src="{{mix('kaya/admin/js/app.js')}}"></script>
 </body>
 </html>
