@@ -23,7 +23,9 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var array
      */
-    protected $fillable = [ 'id'];
+    protected $fillable = [
+        'id'
+    ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -49,5 +51,24 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    /**
+     * Set attributes that are mass assignable.
+     * @param array attributes
+     */
+    public function setFillable(array $attributes) {
+        $this->fillable = $attributes;
+    }
+
+    /**
+     * Create new instance of User from another model of users.
+     * @param $user
+     * @return User
+     */
+    static public function make ($user) {
+        $instance = new User([]);
+        $instance->setFillable(array_merge($instance->getFillable(), $user->getFillable()));
+        return $instance->fill($user->toArray());
     }
 }

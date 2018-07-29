@@ -10,7 +10,7 @@
 </head>
 <body>
     <div id="app"/>
-    <h1>salut</h1>
+    <h1>{{ Kaya\Admin\Models\User::make(auth()->user())}}</h1>
     <script type="text/javascript" src="{{mix('kaya/admin/js/app.js')}}"></script>
 </body>
 </html>
