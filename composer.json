@@ -1,9 +1,31 @@
 {
     "name": "kaya/admin",
-    "require": {
+    "require":
+    {
         "tymon/jwt-auth": "^1.0.0-rc.2",
         "spatie/laravel-permission": "^2.12",
         "jedrzej/pimpable": "^0.0.4"
     },
-    "license": "MIT"
+    "authors": [
+    {
+        "name": "kaya"
+    }],
+    "autoload":
+    {
+        "psr-4":
+        {
+            "Kaya\\Admin\\": "src/"
+        }
+    },
+    "extra":
+    {
+        "laravel":
+        {
+            "providers": [
+                "Kaya\\Admin\\AdminServiceProvider"
+            ]
+        }
+    },
+    "license": "MIT",
+    "minimum-stability": "dev"
 }
