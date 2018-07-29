@@ -20,5 +20,6 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     }
   ],
+  base: '/admin/',
   mode: 'history'
 })
