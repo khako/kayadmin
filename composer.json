@@ -1,0 +1,9 @@
+{
+    "name": "kaya/admin",
+    "require": {
+        "tymon/jwt-auth": "^1.0.0-rc.2",
+        "spatie/laravel-permission": "^2.12",
+        "jedrzej/pimpable": "^0.0.4"
+    },
+    "license": "MIT"
+}
