@@ -17,19 +17,37 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        $router->aliasMiddleware('admin', 'Kaya\Admin\Middlewares\AdminMiddleware');
-
         /** TO REMOVE */
         Schema::defaultStringLength(191);
          /** TO REMOVE */
-         
+
+         /**
+          * Register the aliased middleware "admin".
+          */
+        $router->aliasMiddleware('admin', 'Kaya\Admin\Middlewares\AdminMiddleware');
+        
+        /**
+         * Load the view.
+         */
         $this->loadViewsFrom(__DIR__ . '/views', 'kaya/admin');
 
+        /**
+         * Publish the config file.
+         */
         $this->publishes([
             __DIR__ . '/config.php' => config_path('kayadmin.php')
         ]);
-
-        Route::middleware('web', 'admin')->group(__DIR__ . '/routes/web.php');
+        
+        /**
+         * Register all the routes.
+         */
+        Route::middleware('web', 'admin')
+        ->prefix('admin')
+        ->namespace('Kaya\Admin\Controllers')
+        ->group(function () {
+            Route::prefix('api')->group(__DIR__ . '/routes/api.php');
+            Route::prefix('')->group(__DIR__ . '/routes/web.php');
+        });
     }
 
     /**
