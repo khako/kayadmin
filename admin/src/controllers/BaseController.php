@@ -9,14 +9,27 @@ use Kaya\Admin\Models\BaseModel;
 class BaseController extends Controller
 {
     /**
+     * Table to be used for each request.
+     * 
+     * @var string 
+     */
+    protected $table;
+
+    /**
+     * Model to be used for each request.
+     * 
+     * @var BaseModel|Model 
+     */
+    protected $model;
+
+    /**
      * Display a listing of the resource.
      *
-     * @param string $table
      * @return \Illuminate\Http\Response
      */
-    public function all(string $table)
+    public function all()
     {
-        return BaseModel::forTable($table)->get();
+        return $this->model->pimp()->get();
     }
 
     /**
@@ -27,43 +40,69 @@ class BaseController extends Controller
      */
     public function get(string $table, int $id)
     {
-        return BaseModel::forTable($table)->find($id);
+        return $this->model->find($id);
     }
 
     /**
      * Create a newly created resource in storage.
      *
-     * @param string $table
      * @param array $data
      * @return \Illuminate\Http\Response
      */
     public function create(string $table, array $data)
     {
-        return BaseModel::forTable($table)->create($data);
+        return $this->model->create($data);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param string $table
      * @param int $id
      * @param array  $data
      * @return \Illuminate\Http\Response
      */
     public function update(string $table, int $id, array $data)
     {
-        return $this->get($table, $id)->update($data);
+        return $this->get($id)->update($data);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param string $table
      * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function delete(string $table, int $id)
     {
-        return $this->get($table, $id)->delete();
+        return $this->get($id)->delete();
+    }
+
+    /**
+     * Set the current table.
+     * 
+     * @return void
+     */
+    private function setTable () {
+        $this->table = request()->table;
+    }
+
+     /**
+     * Set the current model.
+     * 
+     * @return void
+     */
+    private function setModel () {
+        $model = 'App\\' . str_singular(title_case($this->table));
+        $this->model = class_exists($model) ? new $model : BaseModel::forTable($this->table);
+    }
+
+    /**
+     * Create a new Controller for the given table.
+     *
+     * @return void
+     */
+    public function __construct() {
+        $this->setTable();
+        $this->setModel();
     }
 }

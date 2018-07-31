@@ -8,6 +8,8 @@ Route::get('/me', function () {
     return User::make(auth()->user());
 });
 
+Route::get('/database', 'DatabaseController@all');
+Route::get('/database/{table}', 'DatabaseController@get');
 Route::get('/{table}', 'BaseController@all');
 Route::get('/{table}/{id}', 'BaseController@get');
 Route::post('/{table}', 'BaseController@create');
