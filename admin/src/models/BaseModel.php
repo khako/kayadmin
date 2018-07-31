@@ -4,6 +4,7 @@ namespace Kaya\Admin\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Jedrzej\Pimpable\PimpableTrait;
+use Kaya\Admin\Controllers\DatabaseController;
 
 class BaseModel extends Model
 {
@@ -54,15 +55,53 @@ class BaseModel extends Model
     }
 
     /**
-     * Create a new Eloquent model instance.
-     *
-     * @param  array  $attributes
-     * @return void
+     * Return the related controller from table.
+     * 
+     * @param string $table
+     * @return any
      */
-    public function __construct(array $attributes = [])
-    {
-            $this->bootIfNotBooted();
-            $this->syncOriginal();
-            $this->fill($attributes);
+    private static function model (string $table) {
+        $model = 'App\\' . str_singular(title_case($table));
+        return class_exists($model) ? $model : BaseModel::forTable($table);
     }
+
+    /**
+     * Handle dynamic method calls into the model.
+     *
+     * @param  string  $method
+     * @param  array  $parameters
+     * @return mixed
+     */
+    public function __call ($method, $parameters)
+    {
+        if (!method_exists($this, $method)) {
+            if (in_array(str_singular($method) . '_id', $this->getFillable())) {
+                if (str_singular($method) === $method) {
+                    $table = str_plural($method);
+                    return $this->belongsTo(static::model($table), $method . '_id', 'id');
+                } else {
+                    $field = str_singular($this->table);
+                    return $this->hasMany(static::model($method), $field . '_id', 'id');
+                }
+            }
+        }
+
+        return parent::__call($method, $parameters);
+    }
+
+    /**
+     * Create a new model instance for a related model.
+     *
+     * @param  string  $class
+     * @return mixed
+     */
+    protected function newRelatedInstance($class)
+    {
+        return tap(is_string($class) ? new $class : $class, function ($instance) {
+            if (! $instance->getConnectionName()) {
+                $instance->setConnection($this->connection);
+            }
+        });
+    }
+    
 }

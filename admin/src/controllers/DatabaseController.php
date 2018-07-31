@@ -34,9 +34,10 @@ class DatabaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function get(string $table)
+    public function get(string $table, bool $visualization = null)
     {
-        return request()->visualization ? static::cleanColumns($table) : static::columns($table);
+        return ($visualization || request()->visualization) ? 
+        static::cleanColumns($table) : static::columns($table);
     }
 
     /**
