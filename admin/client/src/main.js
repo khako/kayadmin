@@ -11,5 +11,9 @@ Vue.config.productionTip = false
 new Vue({
   router,
   store,
+  async created () {
+    await this.$store.dispatch('database/fetch')
+    console.log(this.$store)
+  },
   render: h => h(App)
 }).$mount('#app')

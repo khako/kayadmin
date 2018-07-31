@@ -8,12 +8,13 @@
             </div>
         </div>
         <div class="navbar-menu">
-            <div class="navbar-start"/>
+            <div class="navbar-start" />
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="field is-grouped">
                         <p class="control">
-                            <a class="button" href="https://github.com/jgthms/bulma/releases/download/0.7.1/bulma-0.7.1.zip">
+                            <a class="button"
+                               href="https://github.com/jgthms/bulma/releases/download/0.7.1/bulma-0.7.1.zip">
                                 <span>Logout</span>
                             </a>
                         </p>

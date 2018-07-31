@@ -2,30 +2,62 @@
     <nav class="panel">
         <div class="panel-heading">
             <div class="columns is-gapless">
-                <div class="column is-narrow"><span class="mdi mdi-comment-account" aria-hidden="true"/></div>
-                <div class="column is-narrow"><p class="is-size-6">Khalif Lahbibi</p></div>
-                <div v-if="isSidebarOpen" class="column is-narrow panel-toggle" @click="toggleSidebar"><span class="mdi mdi-toggle-switch-off" aria-hidden="true"/></div>
-                <div v-if="!isSidebarOpen" class="column is-narrow panel-toggle" @click="toggleSidebar"><span class="mdi mdi-toggle-switch" aria-hidden="true"/></div>
+                <div class="column is-narrow">
+                    <span class="mdi mdi-comment-account"
+                          aria-hidden="true" />
+                </div>
+                <div class="column is-narrow">
+                    <p class="is-size-6">Khalif Lahbibi</p>
+                </div>
+                <div v-if="isSidebarOpen"
+                     class="column is-narrow panel-toggle"
+                     @click="toggleSidebar">
+                    <span class="mdi mdi-toggle-switch-off"
+                          aria-hidden="true" />
+                </div>
+                <div v-if="!isSidebarOpen"
+                     class="column is-narrow panel-toggle"
+                     @click="toggleSidebar">
+                    <span class="mdi mdi-toggle-switch"
+                          aria-hidden="true" />
+                </div>
             </div>
         </div>
 
-        <div class="panel-separator"><p><span class="mdi mdi-account-settings-variant" aria-hidden="true"/>Users</p></div>
-        <router-link to="/" class="panel-block is-active">Home</router-link>
-        <router-link to="/about" class="panel-block">About</router-link>
+        <div class="panel-separator">
+            <p>
+                <span class="mdi mdi-account-settings-variant"
+                      aria-hidden="true" />Users</p>
+        </div>
+        <router-link to="/"
+                     class="panel-block is-active">Home</router-link>
+        <router-link to="/about"
+                     class="panel-block">About</router-link>
 
-        <div class="panel-separator"><p><span class="mdi mdi-settings" aria-hidden="true"/>Settings</p></div>
-        <router-link to="/" class="panel-block is-active">Home</router-link>
-        <router-link to="/about" class="panel-block">About</router-link>
+        <div class="panel-separator">
+            <p>
+                <span class="mdi mdi-settings"
+                      aria-hidden="true" />Settings</p>
+        </div>
+        <router-link to="/"
+                     class="panel-block is-active">Home</router-link>
+        <router-link to="/about"
+                     class="panel-block">About</router-link>
 
-        <div class="panel-separator"><p><span class="mdi mdi-database" aria-hidden="true"/>Database</p></div>
-        <router-link to="/" class="panel-block is-active">Home</router-link>
-        <router-link to="/about" class="panel-block">About</router-link>
+        <div class="panel-separator">
+            <p>
+                <span class="mdi mdi-database"
+                      aria-hidden="true" />Database</p>
+        </div>
+        <router-link v-for="(table, index) in $store.state.database.tables"
+                     :key="index"
+                     class="panel-block"
+                     to="/about">{{table.name.plural}}</router-link>
     </nav>
 </template>
 
 <script>
 export default {
-
   name: 'Sidebar',
 
   data () {
