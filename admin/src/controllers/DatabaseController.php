@@ -168,11 +168,11 @@ class DatabaseController extends Controller
         $return = 'id';
         
         if (method_exists($model, 'getRelationDisplay')) {
-            $display = $instance->getRelationDisplay();
+            $display = $instance->getRelationDisplay($column->field);
         }
 
         if (method_exists($model, 'getRelationReturn')) {
-            $return = $instance->getRelationReturn();
+            $return = $instance->getRelationReturn($column->field);
         }
 
         return [

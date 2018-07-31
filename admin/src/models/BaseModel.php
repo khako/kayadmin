@@ -15,14 +15,14 @@ class BaseModel extends Model
      * 
      * @var string
      */
-    protected $relation_display;
+    protected $relation_display = [];
 
     /**
      * Field to return for relation.
      * 
      * @var string
      */
-    protected $relation_return;
+    protected $relation_return = [];
 
     /**
      * Create a new instance of BaseModel for the given table.
@@ -39,19 +39,21 @@ class BaseModel extends Model
     /**
      * Return the field name to display on relation query.
      * 
+     * @param string $relation
      * @return string
      */
-    public function getRelationDisplay() {
-        return $this->relation_display ?? 'name';
+    public function getRelationDisplay(string $relation) {
+        return $this->relation_display[$relation] ?? 'name';
     }
 
     /**
      * Return the field name to return on relation query.
      * 
+     * @param string $relation
      * @return string
      */
-    public function getRelationReturn() {
-        return $this->relation_return ?? 'id';
+    public function getRelationReturn(string $relation) {
+        return $this->relation_return[$relation] ?? 'id';
     }
 
     /**
